@@ -19,7 +19,6 @@
 		        	var promises = res.data.artists.artist.map(function(artist){
 		        		var deferred = $q.defer();
 		        		getTags($http, artist.name).success(function(res){
-		        			console.log("Hello!");
 		        			deferred.resolve(res);
 		        		});
 		        		return deferred.promise;
