@@ -6,7 +6,8 @@
 	services.apiSecret = "9da339504ed7390c1d31f1266aa85c9f";
 
 	var app = angular.module('app', [
-		'appServices'
+		'appServices',
+		'angularSpinner'
 	]);
 
 })(angular);

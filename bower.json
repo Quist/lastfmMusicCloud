@@ -6,6 +6,7 @@
   "dependencies": {
     "angular": "1.2.x",
     "bootstrap": "~3.2.0",
-    "wordcloud2.js": "*"
+    "wordcloud2.js": "*",
+    "angular-spinner": "~0.5.0"
   }
 }

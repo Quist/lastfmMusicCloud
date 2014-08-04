@@ -7,14 +7,18 @@
 	var tagUrl = services.baseUrl + "?method=artist.gettoptags&artist=cher&api_key=" +
 	 services.apiKey + "&format=json"
 
-	services.factory('FavoriteArtists', ['$http', '$q',
+	services.factory('TagRetriever', ['$http', '$q',
 	    function($http, $q){
 	    	return function(username){
-		        return getFavoriteArtists($http, username).success(function(res){
-		        	var promises = res.artists.artist.map(function(artist){
+
+		        return getFavoriteArtists($http, username).then(function(res){
+		        	if(!res.data.artists){
+		        		return;
+		        	}
+
+		        	var promises = res.data.artists.artist.map(function(artist){
 		        		var deferred = $q.defer();
 		        		getTags($http, artist.name).success(function(res){
-		        			console.log("Hello!");
 		        			deferred.resolve(res);
 		        		});
 		        		return deferred.promise;
@@ -22,8 +26,26 @@
 		        	return $q.all(promises);
 	        	});
 	    	}
-
 	    }]);
+
+	services.factory('Wordcloud', ['TagRetriever',
+		function(TagRetriever){
+			return function(username){
+				return TagRetriever(username).then(function(res){
+					if(!res){
+						return [];
+					}
+					var list = [];
+					for(var i = 0; i < res.length; i++){
+						for(var j = 0; j < res[i].toptags.tag.length; j++){
+							insert(list, res[i].toptags.tag[j]);
+						}
+					}
+					return list;
+				});
+			}
+		}]);
+
 
 	function insert(list, tag){
 		if(tag.count < 2){
