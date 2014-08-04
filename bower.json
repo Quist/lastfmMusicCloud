@@ -1,0 +1,11 @@
+{
+  "name": "music-cloud",
+  "description": "last.fm music cloud",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "bootstrap": "~3.2.0",
+    "wordcloud2.js": "*"
+  }
+}
